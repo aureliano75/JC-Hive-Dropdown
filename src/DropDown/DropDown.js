@@ -4,25 +4,26 @@ class DropDown extends React.Component {
   constructor(props) {
     super(props);
     this.ref = React.createRef();
+    //parse API data
     const list = {};
     for (let i = 0; i < props.options.length; i++) {
       list[i] = { index: i, name: props.options[i], selected: false };
     }
     this.state = { open: false, list: list, all: false, single: null };
   }
-
+  //toggle dropdown list open/close
   switchOpen() {
     this.state.open
       ? this.setState({ ...this.state, open: false })
       : this.setState({ ...this.state, open: true });
   }
+  //close dropdown list
   switchClose(event) {
-    console.log("run");
     this.setState({
       open: false,
     });
   }
-
+  //render list option for single select
   SingleSelectOption(listItem) {
     return (
       <div
@@ -35,6 +36,7 @@ class DropDown extends React.Component {
       </div>
     );
   }
+  //render list option for multi select
   MultiSelectOption(listItem) {
     return (
       <label className={`container option ${listItem.selected && "selected"}`}>
@@ -42,6 +44,7 @@ class DropDown extends React.Component {
         <input
           type="checkbox"
           checked={listItem.selected}
+          //update in state where key match for the selected list option is found
           onClick={() => {
             this.setState({
               list: {
@@ -55,6 +58,7 @@ class DropDown extends React.Component {
       </label>
     );
   }
+  //select/deselect all options for multi
   toggleSelectAll() {
     let list = this.state.list;
     Object.keys(list).forEach((key) => {
@@ -65,6 +69,7 @@ class DropDown extends React.Component {
       list: list,
     });
   }
+  //triggered when "Clear Field" button is clicked
   async clearField() {
     this.setState({
       list: await this.clearSelected(),
@@ -72,8 +77,8 @@ class DropDown extends React.Component {
       single: null,
       open: false,
     });
-    console.log(this.state);
   }
+  //set all multi select to !selected when clearField() is called
   clearSelected() {
     let list = this.state.list;
     Object.keys(list).forEach((key) => {
@@ -81,7 +86,7 @@ class DropDown extends React.Component {
     });
     return list;
   }
-
+  //"Select All" checkbox
   SelectAll() {
     return (
       <label className={`container option ${this.state.all && "selected"}`}>
@@ -97,6 +102,7 @@ class DropDown extends React.Component {
       </label>
     );
   }
+  //handle expand/collapse animation
   ExpandCollapse(status) {
     if (status == "expand")
       return (
@@ -121,6 +127,7 @@ class DropDown extends React.Component {
     type == "multi" && listRender.push(this.SelectAll());
     Object.keys(list).map((key) => {
       if (list[key].selected) {
+        //constuct list of selected while rendering the list
         selected.push(list[key].name);
       }
       if (type == "multi") {
