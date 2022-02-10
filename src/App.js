@@ -1,7 +1,7 @@
 import "./App.css";
 import React from "react";
 import DropDown from "./DropDown/DropDown";
-
+import Footer from "./Footer/Footer";
 function App() {
   const API = [
     {
@@ -41,6 +41,7 @@ function App() {
           size={dropdown.size}
         />
       ))}
+       <Footer />
     </div>
   );
 }
