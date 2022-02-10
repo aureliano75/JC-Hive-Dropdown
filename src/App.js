@@ -1,23 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React from "react";
+import DropDown from "./DropDown/DropDown";
 
 function App() {
+  const API = [
+    {
+      id: "winc8sncis",
+      label: "Tag",
+      type: "multi",
+      options: [
+        "Oliver Hansen",
+        "Van Henry",
+        "April Tucker",
+        "Ralph Hubbard",
+        "Anja Greenwood",
+        "Viola Ritter",
+        "Keavy Rhodes",
+        "Macauly Chadwick",
+      ],
+      size: "lg",
+    },
+    {
+      id: "kscn28ndak",
+      label: "Age",
+      type: "single",
+      options: ["Twenty", "Twenty one", "Twenty one and a half"],
+      size: "md",
+    },
+  ];
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {API.map((dropdown) => (
+        <DropDown
+          key={dropdown.id}
+          id={dropdown.id}
+          label={dropdown.label}
+          type={dropdown.type}
+          options={dropdown.options}
+          size={dropdown.size}
+        />
+      ))}
     </div>
   );
 }
