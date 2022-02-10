@@ -54,7 +54,6 @@ class DropDown extends React.Component {
         <span className="checkmark"></span>
       </label>
     );
-
   }
   toggleSelectAll() {
     let list = this.state.list;
@@ -84,9 +83,8 @@ class DropDown extends React.Component {
   }
 
   SelectAll() {
-
-    return(
-        <label className={`container option ${this.state.all && "selected"}`}>
+    return (
+      <label className={`container option ${this.state.all && "selected"}`}>
         Select All
         <input
           type="checkbox"
@@ -97,7 +95,21 @@ class DropDown extends React.Component {
         />
         <span className="checkmark"></span>
       </label>
-    )
+    );
+  }
+  ExpandCollapse(status) {
+    if (status == "expand")
+      return (
+        <span class="material-icons" title="Expand">
+          expand_more
+        </span>
+      );
+    if (status == "collapse")
+      return (
+        <span class="material-icons" title="Collapse">
+          expand_less
+        </span>
+      );
   }
   render() {
     const { id, label, type, options, size } = this.props;
@@ -138,10 +150,13 @@ class DropDown extends React.Component {
                   ? single
                   : null}
               </div>
-              {((selected.length > 0 || single) && (
-                <span class="material-icons">expand_less</span>
-              )) || <span class="material-icons">expand_less</span>}
+              {open && (selected.length > 0 || single)
+                ? this.ExpandCollapse("collapse")
+                : !open && (selected.length > 0 || single)
+                ? this.ExpandCollapse("expand")
+                : this.ExpandCollapse("collapse")}
               <span
+                title="Clear field"
                 onClick={() => {
                   this.clearField();
                 }}
@@ -154,7 +169,7 @@ class DropDown extends React.Component {
             <>
               <div className="placeholder">
                 {label}
-                <span class="material-icons">expand_more</span>
+                {this.ExpandCollapse("expand")}
               </div>
             </>
           )}
